@@ -50,16 +50,16 @@ export default function(radius) {
     /**
      * 遍历四叉树节点执行的函数
      * @param {Node} quad 四叉树遍历到的节点
-     * @param {Number} x0 四叉树节点的下界坐标x
-     * @param {Number} y0 四叉树节点的下界坐标y
-     * @param {Number} x1 四叉树节点的上界坐标x
-     * @param {Number} y1 四叉树节点的上界坐标y
+     * @param {Number} x0 四叉树节点的象限左边界
+     * @param {Number} y0 四叉树节点的象限上边界
+     * @param {Number} x1 四叉树节点的象限右边界
+     * @param {Number} y1 四叉树节点的象限下边界
      * @returns {Boolean} true: 遍历子节点; false: 不遍历子节点
      */
     function apply(quad, x0, y0, x1, y1) {
       // data: 四叉树节点数据
       // rj: 四叉树节点数据-半径
-      // r: 
+      // r: 2个节点相切时的距离
       var data = quad.data, rj = quad.r, r = ri + rj;
       if (data) {
         if (data.index > node.index) {
@@ -69,9 +69,12 @@ export default function(radius) {
               l = x * x + y * y;
           // l < r * r: 说明2者相交，达到碰撞条件
           if (l < r * r) {
+            // 当 y === 0 (垂直) 时  x 赋值一个随机抖动值
             if (x === 0) x = jiggle(), l += x * x;
+            // 当 y === 0 (水平) 时  y 赋值一个随机抖动值
             if (y === 0) y = jiggle(), l += y * y;
-            l = (r - (l = Math.sqrt(l))) / l * strength;
+            // 重新给2个碰撞节点的v坐标进行赋值->计算逻辑这边还不理解
+            l = (r - (l = Math.sqrt(l))) / l * strength; 
             node.vx += (x *= l) * (r = (rj *= rj) / (ri2 + rj));
             node.vy += (y *= l) * r;
             data.vx -= x * (r = 1 - r);
@@ -84,6 +87,7 @@ export default function(radius) {
     }
   }
 
+  // 四叉树预处理：赋值节点半径
   function prepare(quad) {
     if (quad.data) return quad.r = radii[quad.data.index];
     for (var i = quad.r = 0; i < 4; ++i) {
