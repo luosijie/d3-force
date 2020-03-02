@@ -83,6 +83,7 @@ export default function(radius) {
         }
         return;
       }
+      // 返回false：正在遍历的节点在四叉树节点碰撞区域内，继续遍历；返回true 不遍历子节点
       return x0 > xi + r || x1 < xi - r || y0 > yi + r || y1 < yi - r;
     }
   }
