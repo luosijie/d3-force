@@ -30,7 +30,7 @@ export default function(radius) {
     var i,                 // 节点索引值
         n = nodes.length,  // 节点长度
         tree,              // 将节点数据存储到四叉树中
-        node,              // 正在遍历的节点
+        node,              // 正在遍历的节点-简称A
         xi,                // 正在遍历的节点-坐标x
         yi,                // 正在遍历的节点-坐标y
         ri,                // 正在遍历的节点-半径
