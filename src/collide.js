@@ -73,8 +73,9 @@ export default function(radius) {
             if (x === 0) x = jiggle(), l += x * x;
             // 当 y === 0 (水平) 时  y 赋值一个随机抖动值
             if (y === 0) y = jiggle(), l += y * y;
-            // 重新给2个碰撞节点的v坐标进行赋值->计算逻辑这边还不理解
+            // l: 重叠长度 / 实际距离 * 碰撞强度
             l = (r - (l = Math.sqrt(l))) / l * strength; 
+            // 根据 l 求出正在遍历的节点(node)和四叉树节点(data)新的速度和方向
             node.vx += (x *= l) * (r = (rj *= rj) / (ri2 + rj));
             node.vy += (y *= l) * r;
             data.vx -= x * (r = 1 - r);
